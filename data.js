@@ -105,7 +105,12 @@ var MONUMENTS = [
   { name: "Alhambra",                country: "Espagne",   city: "Grenade",     fact: "Palais et forteresse construits par les Maures au 13e siècle." },
   { name: "Village du Père Noël",    country: "Finlande",  city: "Rovaniemi",   fact: "Village officiel du Père Noël en Laponie, sur le cercle polaire arctique." },
   { name: "Mur de Berlin (vestiges)",country: "Allemagne", city: "Berlin",      fact: "Mur qui séparait Berlin en deux de 1961 à 1989, symbole de la Guerre froide." },
-  { name: "Arc de Triomphe",         country: "France",    city: "Paris",       fact: "Monument en haut des Champs-Élysées, construit par Napoléon en 1806." },
+  { name: "Arc de Triomphe",          country: "France",    city: "Paris",       fact: "Monument en haut des Champs-Élysées, construit par Napoléon en 1806." },
+  { name: "Vieille ville de Tallinn", country: "Estonie",  city: "Tallinn",     fact: "Centre médiéval très bien conservé, patrimoine UNESCO depuis 1997." },
+  { name: "Château de Wawel",        country: "Pologne",   city: "Cracovie",    fact: "Ancien château royal des rois de Pologne, au bord de la Vistule." },
+  { name: "Jardins de Tivoli",       country: "Danemark",  city: "Copenhague",  fact: "Parc d'attractions ouvert en 1843, l'un des plus anciens du monde. A inspiré Walt Disney." },
+  { name: "Forteresse de Suomenlinna", country: "Finlande", city: "Helsinki",   fact: "Forteresse maritime construite sur des îles, patrimoine UNESCO." },
+  { name: "Cathédrale de Francfort", country: "Allemagne", city: "Francfort",   fact: "Cathédrale où étaient couronnés les empereurs du Saint-Empire romain germanique." },
 ];
 
 
@@ -182,6 +187,9 @@ var PEOPLE = [
   { name: "Rembrandt",             country: "Pays-Bas",         fact: "Grand peintre du Siècle d'or néerlandais, célèbre pour La Ronde de nuit." },
   { name: "Nicolas Copernic",      country: "Pologne",          fact: "Astronome qui a montré que la Terre tourne autour du Soleil." },
   { name: "Vivaldi",              country: "Italie",           fact: "Compositeur baroque, célèbre pour Les Quatre Saisons." },
+  { name: "Jean Sibelius",       country: "Finlande",         fact: "Compositeur national finlandais, célèbre pour Finlandia." },
+  { name: "Lego (Ole Kirk Christiansen)", country: "Danemark", fact: "Inventeur des briques Lego en 1932, jouet connu dans le monde entier." },
+  { name: "Arvo Pärt",           country: "Estonie",          fact: "Compositeur estonien contemporain, l'un des plus joués au monde." },
 ];
 
 
@@ -412,6 +420,11 @@ var MONUMENTS_EN = [
   { name: "Santa Claus Village",      country: "Finland",     city: "Rovaniemi",   fact: "Official Santa Claus village in Lapland, on the Arctic Circle." },
   { name: "Berlin Wall (remains)",    country: "Germany",     city: "Berlin",      fact: "Wall that divided Berlin from 1961 to 1989, symbol of the Cold War." },
   { name: "Arc de Triomphe",          country: "France",      city: "Paris",       fact: "Monument atop the Champs-Élysées, built by Napoleon in 1806." },
+  { name: "Tallinn Old Town",        country: "Estonia",     city: "Tallinn",     fact: "Well-preserved medieval centre, UNESCO World Heritage since 1997." },
+  { name: "Wawel Castle",            country: "Poland",      city: "Kraków",      fact: "Former royal castle of Polish kings, on the banks of the Vistula." },
+  { name: "Tivoli Gardens",          country: "Denmark",     city: "Copenhagen",  fact: "Amusement park opened in 1843, one of the oldest in the world. Inspired Walt Disney." },
+  { name: "Suomenlinna Fortress",    country: "Finland",     city: "Helsinki",    fact: "Sea fortress built on islands, UNESCO World Heritage." },
+  { name: "Frankfurt Cathedral",     country: "Germany",     city: "Frankfurt",   fact: "Cathedral where Holy Roman Emperors were crowned." },
 ];
 
 var CUISINE_EN = [
@@ -478,6 +491,9 @@ var PEOPLE_EN = [
   { name: "Rembrandt",                country: "Netherlands",        fact: "Great painter of the Dutch Golden Age, famous for The Night Watch." },
   { name: "Nicolaus Copernicus",      country: "Poland",             fact: "Astronomer who showed that the Earth revolves around the Sun." },
   { name: "Vivaldi",                  country: "Italy",              fact: "Baroque composer, famous for The Four Seasons." },
+  { name: "Jean Sibelius",           country: "Finland",            fact: "Finnish national composer, famous for Finlandia." },
+  { name: "Lego (Ole Kirk Christiansen)", country: "Denmark",       fact: "Inventor of Lego bricks in 1932, a toy known worldwide." },
+  { name: "Arvo Pärt",               country: "Estonia",            fact: "Contemporary Estonian composer, one of the most performed in the world." },
 ];
 
 var EU_FACTS_EN = [
