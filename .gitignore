@@ -1,0 +1,13 @@
+﻿# JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+ 
+# OS
+.DS_Store
+Thumbs.db
+ 
+# Éditeurs
+*.swp
+*.swo
+*~
+ 

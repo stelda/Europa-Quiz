@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Europe - Entraînement Concours</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-flag">Concours Europe</div>
+    <h1>Quiz Europe</h1>
+    <p>Entraîne-toi pour le concours !</p>
+  </div>
+
+  <!-- SCORE BAR -->
+  <div class="score-bar">
+    <div class="score-item"><span>⭐</span> Score : <span id="totalScore">0</span></div>
+    <div class="score-item"><span>🔥</span> Série : <span id="streak">0</span></div>
+    <div class="score-item"><span>✅</span> <span id="accuracy">0</span>%</div>
+  </div>
+
+  <!-- MENU -->
+  <div id="menuArea">
+    <div class="categories" id="catGrid"></div>
+    <div class="mode-section">
+      <h3>Mode d'entraînement</h3>
+      <div class="mode-btns">
+        <button class="mode-btn active" data-mode="quiz" onclick="selectMode('quiz')">🎯 Quiz</button>
+        <button class="mode-btn" data-mode="flash" onclick="selectMode('flash')">🃏 Flashcards</button>
+        <button class="mode-btn" data-mode="marathon" onclick="selectMode('marathon')">🏃 Marathon</button>
+      </div>
+    </div>
+    <button class="start-btn" onclick="startGame()">Commencer !</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-area" id="quizArea">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">1/10</span>
+    </div>
+    <div class="question-card" id="questionCard"></div>
+    <div class="explanation" id="explanation"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Suivant →</button>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="flashcard-area" id="flashArea">
+    <div class="flash-counter" id="flashCounter">1 / 10</div>
+    <div class="flashcard-container">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="flash-face flash-front" id="flashFront"></div>
+        <div class="flash-face flash-back" id="flashBack"></div>
+      </div>
+    </div>
+    <div class="flash-nav">
+      <button class="flash-prev" onclick="prevCard()">← Précédent</button>
+      <button class="flash-next-card" onclick="nextCard()">Suivant →</button>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="mode-btn" onclick="backToMenu()">↩ Retour au menu</button>
+    </div>
+  </div>
+
+  <!-- RÉSULTATS -->
+  <div class="results" id="resultsArea">
+    <div class="results-card">
+      <div class="results-emoji" id="resEmoji"></div>
+      <div class="results-title" id="resTitle"></div>
+      <div class="results-score" id="resScore"></div>
+      <div class="results-detail" id="resDetail"></div>
+      <div class="results-actions">
+        <button class="btn-primary" onclick="startGame()">🔄 Recommencer</button>
+        <button class="btn-secondary" onclick="backToMenu()">↩ Menu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts séparés : données d'abord, logique ensuite -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
