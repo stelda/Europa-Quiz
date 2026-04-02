@@ -9,17 +9,23 @@
 </head>
 <body>
 <div class="app">
+  <!-- LANGUE -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="fr" onclick="switchLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇬🇧 EN</button>
+  </div>
+
   <!-- HEADER -->
   <div class="header">
-    <div class="header-flag">Concours Europe</div>
+    <div class="header-flag" id="headerFlag">Concours Europe</div>
     <h1>Quiz Europe</h1>
-    <p>Entraîne-toi pour le concours !</p>
+    <p id="headerSub">Entraîne-toi pour le concours !</p>
   </div>
 
   <!-- SCORE BAR -->
   <div class="score-bar">
-    <div class="score-item"><span>⭐</span> Score : <span id="totalScore">0</span></div>
-    <div class="score-item"><span>🔥</span> Série : <span id="streak">0</span></div>
+    <div class="score-item"><span>⭐</span> <span id="labelScore">Score</span> : <span id="totalScore">0</span></div>
+    <div class="score-item"><span>🔥</span> <span id="labelStreak">Série</span> : <span id="streak">0</span></div>
     <div class="score-item"><span>✅</span> <span id="accuracy">0</span>%</div>
   </div>
 
@@ -27,14 +33,14 @@
   <div id="menuArea">
     <div class="categories" id="catGrid"></div>
     <div class="mode-section">
-      <h3>Mode d'entraînement</h3>
+      <h3 id="modeTitle">Mode d'entraînement</h3>
       <div class="mode-btns">
         <button class="mode-btn active" data-mode="quiz" onclick="selectMode('quiz')">🎯 Quiz</button>
         <button class="mode-btn" data-mode="flash" onclick="selectMode('flash')">🃏 Flashcards</button>
         <button class="mode-btn" data-mode="marathon" onclick="selectMode('marathon')">🏃 Marathon</button>
       </div>
     </div>
-    <button class="start-btn" onclick="startGame()">Commencer !</button>
+    <button class="start-btn" id="startBtn" onclick="startGame()">Commencer !</button>
   </div>
 
   <!-- QUIZ -->
@@ -58,11 +64,11 @@
       </div>
     </div>
     <div class="flash-nav">
-      <button class="flash-prev" onclick="prevCard()">← Précédent</button>
-      <button class="flash-next-card" onclick="nextCard()">Suivant →</button>
+      <button class="flash-prev" id="flashPrevBtn" onclick="prevCard()">← Précédent</button>
+      <button class="flash-next-card" id="flashNextBtn" onclick="nextCard()">Suivant →</button>
     </div>
     <div style="text-align:center;margin-top:20px">
-      <button class="mode-btn" onclick="backToMenu()">↩ Retour au menu</button>
+      <button class="mode-btn" id="backMenuBtn" onclick="backToMenu()">↩ Retour au menu</button>
     </div>
   </div>
 
@@ -74,8 +80,8 @@
       <div class="results-score" id="resScore"></div>
       <div class="results-detail" id="resDetail"></div>
       <div class="results-actions">
-        <button class="btn-primary" onclick="startGame()">🔄 Recommencer</button>
-        <button class="btn-secondary" onclick="backToMenu()">↩ Menu</button>
+        <button class="btn-primary" id="resRetryBtn" onclick="startGame()">🔄 Recommencer</button>
+        <button class="btn-secondary" id="resMenuBtn" onclick="backToMenu()">↩ Menu</button>
       </div>
     </div>
   </div>

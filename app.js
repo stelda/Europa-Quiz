@@ -4,6 +4,7 @@
 
 var selectedCats = new Set(["flags"]);
 var selectedMode = "quiz";
+var currentLang = "fr";
 var questions = [];
 var currentQ = 0;
 var score = 0;
@@ -16,6 +17,62 @@ var flashCards = [];
 
 
 // ═══════════════════════════════════════════
+// LANGUE
+// ═══════════════════════════════════════════
+
+function t(key) {
+  return i18n[currentLang][key];
+}
+
+function getData() {
+  if (currentLang === "en") {
+    return { flags: FLAGS_EN, monuments: MONUMENTS_EN, cuisine: CUISINE_EN, people: PEOPLE_EN, eu: EU_FACTS_EN };
+  }
+  return { flags: FLAGS, monuments: MONUMENTS, cuisine: CUISINE, people: PEOPLE, eu: EU_FACTS };
+}
+
+// Les clés SVG sont en FR — on traduit le nom EN vers FR pour trouver le bon drapeau
+function getFlagCountryKey(countryName) {
+  if (SVG_FLAGS[countryName]) return countryName;
+  if (COUNTRY_EN_TO_FR[countryName]) return COUNTRY_EN_TO_FR[countryName];
+  return countryName;
+}
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang;
+  refreshUI();
+}
+
+function refreshUI() {
+  document.getElementById('headerFlag').textContent = t('headerFlag');
+  document.getElementById('headerSub').textContent = t('headerSub');
+  document.getElementById('labelScore').textContent = t('score');
+  document.getElementById('labelStreak').textContent = t('streak');
+  document.getElementById('modeTitle').textContent = t('modeTitle');
+
+  document.querySelectorAll('.mode-btn[data-mode]').forEach(function(b) {
+    if (b.dataset.mode === 'quiz') b.textContent = t('modeQuiz');
+    if (b.dataset.mode === 'flash') b.textContent = t('modeFlash');
+    if (b.dataset.mode === 'marathon') b.textContent = t('modeMarathon');
+  });
+
+  document.getElementById('startBtn').textContent = t('start');
+  document.getElementById('nextBtn').textContent = t('next');
+  document.getElementById('flashPrevBtn').textContent = t('prev');
+  document.getElementById('flashNextBtn').textContent = t('next');
+  document.getElementById('backMenuBtn').textContent = t('backMenu');
+  document.getElementById('resRetryBtn').textContent = t('retry');
+  document.getElementById('resMenuBtn').textContent = t('menu');
+
+  renderCategories();
+}
+
+
+// ═══════════════════════════════════════════
 // UTILITAIRES
 // ═══════════════════════════════════════════
 
@@ -23,7 +80,7 @@ function shuffle(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
   }
   return a;
 }
@@ -45,12 +102,13 @@ function updateScoreBar() {
 // ═══════════════════════════════════════════
 
 function renderCategories() {
+  var L = i18n[currentLang];
   document.getElementById('catGrid').innerHTML = catData.map(function(c) {
     return '<div class="cat-card ' + (selectedCats.has(c.id) ? 'selected' : '') +
       '" data-cat="' + c.id + '" onclick="toggleCat(\'' + c.id + '\')">' +
       '<span class="cat-emoji">' + c.emoji + '</span>' +
-      '<div class="cat-title">' + c.title + '</div>' +
-      '<div class="cat-desc">' + c.desc + '</div></div>';
+      '<div class="cat-title">' + L.catTitle(c) + '</div>' +
+      '<div class="cat-desc">' + L.catDesc(c) + '</div></div>';
   }).join('');
 }
 
@@ -68,7 +126,7 @@ function toggleCat(id) {
 
 function selectMode(mode) {
   selectedMode = mode;
-  document.querySelectorAll('.mode-btn').forEach(function(b) {
+  document.querySelectorAll('.mode-btn[data-mode]').forEach(function(b) {
     b.classList.toggle('active', b.dataset.mode === mode);
   });
 }
@@ -88,6 +146,8 @@ function backToMenu() {
 function generateQuestions(count) {
   count = count || 10;
   var qs = [];
+  var L = i18n[currentLang];
+  var D = getData();
   var activeCats = selectedCats.has("all")
     ? ["flags", "monuments", "cuisine", "people", "eu"]
     : Array.from(selectedCats);
@@ -95,101 +155,99 @@ function generateQuestions(count) {
 
   activeCats.forEach(function(cat) {
 
-    // --- DRAPEAUX & CAPITALES ---
     if (cat === "flags") {
-      pick(FLAGS, perCat).forEach(function(f) {
+      pick(D.flags, perCat).forEach(function(f) {
+        var flagKey = getFlagCountryKey(f.country);
         if (Math.random() > 0.5) {
-          var others = pick(FLAGS.filter(function(x) { return x.country !== f.country; }), 3)
+          var others = pick(D.flags.filter(function(x) { return x.country !== f.country; }), 3)
             .map(function(x) { return x.country; });
           qs.push({
-            cat: "Drapeaux", type: "flag", flagCountry: f.country,
-            text: "Quel pays a ce drapeau ?", answer: f.country,
+            cat: currentLang === "fr" ? "Drapeaux" : "Flags",
+            type: "flag", flagCountry: flagKey,
+            text: L.whichCountryFlag, answer: f.country,
             options: shuffle([f.country].concat(others)),
-            detail: f.country + " – " + f.hint + ". Capitale : " + f.capital + "."
+            detail: L.flagDetail(f.country, f.hint, f.capital)
           });
         } else {
-          var others = pick(FLAGS.filter(function(x) { return x.capital !== f.capital; }), 3)
+          var others = pick(D.flags.filter(function(x) { return x.capital !== f.capital; }), 3)
             .map(function(x) { return x.capital; });
           qs.push({
-            cat: "Capitales", type: "flagtext", flagCountry: f.country,
-            text: "Quelle est la capitale de " + f.country + " ?", answer: f.capital,
+            cat: currentLang === "fr" ? "Capitales" : "Capitals",
+            type: "flagtext", flagCountry: flagKey,
+            text: L.capitalOf(f.country), answer: f.capital,
             options: shuffle([f.capital].concat(others)),
-            detail: "La capitale de " + f.country + " est " + f.capital + "."
+            detail: L.capitalDetail(f.country, f.capital)
           });
         }
       });
     }
 
-    // --- MONUMENTS ---
     if (cat === "monuments") {
-      pick(MONUMENTS, perCat).forEach(function(m) {
+      pick(D.monuments, perCat).forEach(function(m) {
         if (Math.random() > 0.5) {
-          var others = pick(MONUMENTS.filter(function(x) { return x.country !== m.country; }), 3)
+          var others = pick(D.monuments.filter(function(x) { return x.country !== m.country; }), 3)
             .map(function(x) { return x.country; });
           qs.push({
             cat: "Monuments", type: "text",
-            text: 'Dans quel pays se trouve "' + m.name + '" ?',
-            answer: m.country, options: shuffle([m.country].concat(others)),
-            detail: m.name + " se trouve à " + m.city + ", " + m.country + ". " + m.fact
+            text: L.whereIsMonument(m.name), answer: m.country,
+            options: shuffle([m.country].concat(others)),
+            detail: L.monumentDetail(m.name, m.city, m.country, m.fact)
           });
         } else {
-          var others = pick(MONUMENTS.filter(function(x) { return x.name !== m.name; }), 3)
+          var others = pick(D.monuments.filter(function(x) { return x.name !== m.name; }), 3)
             .map(function(x) { return x.name; });
           qs.push({
             cat: "Monuments", type: "text",
-            text: "Quel monument se trouve à " + m.city + " (" + m.country + ") ?",
-            answer: m.name, options: shuffle([m.name].concat(others)),
-            detail: m.name + " – " + m.fact
+            text: L.whichMonument(m.city, m.country), answer: m.name,
+            options: shuffle([m.name].concat(others)),
+            detail: L.monumentDetail2(m.name, m.fact)
           });
         }
       });
     }
 
-    // --- GASTRONOMIE ---
     if (cat === "cuisine") {
-      pick(CUISINE, perCat).forEach(function(c) {
+      pick(D.cuisine, perCat).forEach(function(c) {
         if (Math.random() > 0.5) {
-          var others = pick(CUISINE.filter(function(x) { return x.country !== c.country; }), 3)
+          var others = pick(D.cuisine.filter(function(x) { return x.country !== c.country; }), 3)
             .map(function(x) { return x.country; });
           qs.push({
-            cat: "Gastronomie", type: "text",
-            text: 'De quel pays vient "' + c.dish + '" ?',
-            answer: c.country, options: shuffle([c.country].concat(others)),
-            detail: c.dish + " vient de " + c.country + ". " + c.fact
+            cat: currentLang === "fr" ? "Gastronomie" : "Cuisine",
+            type: "text", text: L.dishFrom(c.dish), answer: c.country,
+            options: shuffle([c.country].concat(others)),
+            detail: L.dishDetail(c.dish, c.country, c.fact)
           });
         } else {
-          var others = pick(CUISINE.filter(function(x) { return x.dish !== c.dish; }), 3)
+          var others = pick(D.cuisine.filter(function(x) { return x.dish !== c.dish; }), 3)
             .map(function(x) { return x.dish; });
           qs.push({
-            cat: "Gastronomie", type: "text",
-            text: "Quel plat est typique de " + c.country + " ?",
-            answer: c.dish, options: shuffle([c.dish].concat(others)),
-            detail: c.dish + " – " + c.fact
+            cat: currentLang === "fr" ? "Gastronomie" : "Cuisine",
+            type: "text", text: L.typicalDish(c.country), answer: c.dish,
+            options: shuffle([c.dish].concat(others)),
+            detail: L.dishDetail2(c.dish, c.fact)
           });
         }
       });
     }
 
-    // --- PERSONNALITÉS ---
     if (cat === "people") {
-      pick(PEOPLE, perCat).forEach(function(p) {
-        var others = pick(PEOPLE.filter(function(x) { return x.name !== p.name; }), 3)
+      pick(D.people, perCat).forEach(function(p) {
+        var others = pick(D.people.filter(function(x) { return x.name !== p.name; }), 3)
           .map(function(x) { return x.country; });
         qs.push({
-          cat: "Personnalités", type: "text",
-          text: "De quel pays vient " + p.name + " ?",
-          answer: p.country, options: shuffle([p.country].concat(others)),
-          detail: p.name + " (" + p.country + ") – " + p.fact
+          cat: currentLang === "fr" ? "Personnalités" : "Famous People",
+          type: "text", text: L.personFrom(p.name), answer: p.country,
+          options: shuffle([p.country].concat(others)),
+          detail: L.personDetail(p.name, p.country, p.fact)
         });
       });
     }
 
-    // --- UNION EUROPÉENNE ---
     if (cat === "eu") {
-      pick(EU_FACTS, perCat).forEach(function(e) {
+      pick(D.eu, perCat).forEach(function(e) {
         qs.push({
-          cat: "Union Européenne", type: "text",
-          text: e.q, answer: e.a,
+          cat: currentLang === "fr" ? "Union Européenne" : "European Union",
+          type: "text", text: e.q, answer: e.a,
           options: shuffle(e.opts), detail: e.detail
         });
       });
@@ -248,8 +306,7 @@ function checkAnswer(btn, idx) {
   var selected = q.options[idx];
   var correct = q.answer;
 
-  var btns = document.querySelectorAll('.option-btn');
-  btns.forEach(function(b) {
+  document.querySelectorAll('.option-btn').forEach(function(b) {
     b.disabled = true;
     if (b.textContent === correct) b.classList.add('correct');
   });
@@ -267,7 +324,7 @@ function checkAnswer(btn, idx) {
   updateScoreBar();
 
   var expl = document.getElementById('explanation');
-  expl.textContent = (selected === correct ? "✅ Bravo ! " : "❌ Raté ! ") + q.detail;
+  expl.textContent = (selected === correct ? t('correct') : t('wrong')) + q.detail;
   expl.classList.add('show');
   document.getElementById('nextBtn').classList.add('show');
 }
@@ -290,18 +347,18 @@ function showResults() {
   var pct = Math.round(score / questions.length * 100);
   var emoji, title;
 
-  if (pct === 100)     { emoji = "🏆"; title = "Parfait ! Tu es un champion !"; }
-  else if (pct >= 80)  { emoji = "🌟"; title = "Excellent travail !"; }
-  else if (pct >= 60)  { emoji = "👏"; title = "Bien joué !"; }
-  else if (pct >= 40)  { emoji = "💪"; title = "Continue, tu progresses !"; }
-  else                 { emoji = "📚"; title = "Il faut réviser encore !"; }
+  if (pct === 100)     { emoji = "🏆"; title = t('result100'); }
+  else if (pct >= 80)  { emoji = "🌟"; title = t('result80'); }
+  else if (pct >= 60)  { emoji = "👏"; title = t('result60'); }
+  else if (pct >= 40)  { emoji = "💪"; title = t('result40'); }
+  else                 { emoji = "📚"; title = t('resultLow'); }
 
   document.getElementById('resEmoji').textContent = emoji;
   document.getElementById('resTitle').textContent = title;
   document.getElementById('resScore').textContent = score + " / " + questions.length;
   document.getElementById('resDetail').innerHTML =
-    "Score : " + pct + "%<br>Meilleure série : " + bestStreak + " 🔥<br>" +
-    (pct >= 80 ? "Tu es prêt pour le concours !" : "Essaie encore pour t'améliorer !");
+    t('score') + " : " + pct + "%<br>" + t('bestStreak') + " : " + bestStreak + " 🔥<br>" +
+    (pct >= 80 ? t('ready') : t('tryAgain'));
 }
 
 
@@ -312,20 +369,22 @@ function showResults() {
 function generateFlashcards(count) {
   count = count || 15;
   var cards = [];
+  var L = i18n[currentLang];
+  var D = getData();
   var activeCats = selectedCats.has("all")
     ? ["flags", "monuments", "cuisine", "people", "eu"]
     : Array.from(selectedCats);
 
   if (activeCats.indexOf("flags") >= 0) {
-    pick(FLAGS, 6).forEach(function(f) {
+    pick(D.flags, 6).forEach(function(f) {
       cards.push({
-        front: { flagCountry: f.country, text: "Quel pays ? Quelle capitale ?" },
-        back:  { answer: f.country, detail: "Capitale : " + f.capital + "\n" + f.hint }
+        front: { flagCountry: getFlagCountryKey(f.country), text: L.flashFlagQ },
+        back:  { answer: f.country, detail: L.flashCapital(f.capital, f.hint) }
       });
     });
   }
   if (activeCats.indexOf("monuments") >= 0) {
-    pick(MONUMENTS, 4).forEach(function(m) {
+    pick(D.monuments, 4).forEach(function(m) {
       cards.push({
         front: { emoji: "🏛️", text: m.name },
         back:  { answer: m.city + ", " + m.country, detail: m.fact }
@@ -333,7 +392,7 @@ function generateFlashcards(count) {
     });
   }
   if (activeCats.indexOf("cuisine") >= 0) {
-    pick(CUISINE, 4).forEach(function(c) {
+    pick(D.cuisine, 4).forEach(function(c) {
       cards.push({
         front: { emoji: "🍽️", text: c.dish },
         back:  { answer: c.country, detail: c.fact }
@@ -341,7 +400,7 @@ function generateFlashcards(count) {
     });
   }
   if (activeCats.indexOf("people") >= 0) {
-    pick(PEOPLE, 4).forEach(function(p) {
+    pick(D.people, 4).forEach(function(p) {
       cards.push({
         front: { emoji: "🎨", text: p.name },
         back:  { answer: p.country, detail: p.fact }
@@ -349,7 +408,7 @@ function generateFlashcards(count) {
     });
   }
   if (activeCats.indexOf("eu") >= 0) {
-    pick(EU_FACTS, 4).forEach(function(e) {
+    pick(D.eu, 4).forEach(function(e) {
       cards.push({
         front: { emoji: "⭐", text: e.q },
         back:  { answer: e.a, detail: e.detail }
@@ -383,7 +442,7 @@ function showFlashcard() {
   document.getElementById('flashFront').innerHTML =
     frontVisual +
     '<div class="flash-question">' + c.front.text + '</div>' +
-    '<div class="flash-tap">Clique pour retourner</div>';
+    '<div class="flash-tap">' + t('flipTap') + '</div>';
 
   document.getElementById('flashBack').innerHTML =
     '<div class="flash-answer">' + c.back.answer + '</div>' +

@@ -331,6 +331,25 @@ body::before {
    ═══════════════════════════════════════════ */
 .hidden { display: none !important; }
 
+/* ═══════════════════════════════════════════
+   LANGUAGE TOGGLE
+   ═══════════════════════════════════════════ */
+.lang-toggle {
+  display: flex; justify-content: flex-end; gap: 6px;
+  margin-bottom: -10px;
+}
+
+.lang-btn {
+  background: var(--card-bg); border: 2px solid #e2e8f0;
+  padding: 6px 14px; border-radius: 20px;
+  font-family: 'Nunito', sans-serif; font-size: 13px;
+  font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.lang-btn:hover { border-color: var(--accent1); }
+.lang-btn.active {
+  background: var(--eu-blue); color: white; border-color: var(--eu-blue);
+}
+
 @media (max-width: 600px) {
   .app { padding: 12px; }
   .question-card { padding: 20px; }
