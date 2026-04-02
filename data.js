@@ -98,6 +98,14 @@ var MONUMENTS = [
   { name: "Tour penchée de Pise",     country: "Italie",    city: "Pise",        fact: "Campanile incliné à 3,97 degrés, commencé en 1173." },
   { name: "Château de Neuschwanstein",country: "Allemagne", city: "Bavière",     fact: "Château du roi Louis II, inspiration pour le château Disney." },
   { name: "Moulins de Kinderdijk",    country: "Pays-Bas",  city: "Kinderdijk",  fact: "19 moulins à vent du 18e siècle, patrimoine UNESCO." },
+  { name: "Château de Versailles",   country: "France",    city: "Versailles",  fact: "Palais du Roi-Soleil Louis XIV, avec la célèbre Galerie des Glaces." },
+  { name: "Mont-Saint-Michel",       country: "France",    city: "Normandie",   fact: "Abbaye sur un îlot rocheux, entourée par les plus grandes marées d'Europe." },
+  { name: "Fontaine de Trevi",       country: "Italie",    city: "Rome",        fact: "Célèbre fontaine où les touristes lancent une pièce pour faire un vœu." },
+  { name: "Canaux de Venise",        country: "Italie",    city: "Venise",      fact: "Ville construite sur l'eau avec des gondoles à la place des voitures." },
+  { name: "Alhambra",                country: "Espagne",   city: "Grenade",     fact: "Palais et forteresse construits par les Maures au 13e siècle." },
+  { name: "Village du Père Noël",    country: "Finlande",  city: "Rovaniemi",   fact: "Village officiel du Père Noël en Laponie, sur le cercle polaire arctique." },
+  { name: "Mur de Berlin (vestiges)",country: "Allemagne", city: "Berlin",      fact: "Mur qui séparait Berlin en deux de 1961 à 1989, symbole de la Guerre froide." },
+  { name: "Arc de Triomphe",         country: "France",    city: "Paris",       fact: "Monument en haut des Champs-Élysées, construit par Napoléon en 1806." },
 ];
 
 
@@ -166,6 +174,14 @@ var PEOPLE = [
   { name: "Les frères Grimm",       country: "Allemagne",        fact: "Auteurs de Cendrillon, Blanche-Neige, Hansel et Gretel." },
   { name: "Frédéric Chopin",        country: "Pologne",          fact: "Compositeur et pianiste virtuose romantique." },
   { name: "Aristote",               country: "Grèce",            fact: "Philosophe grec ancien, élève de Platon." },
+  { name: "Christophe Colomb",     country: "Italie",           fact: "Navigateur italien qui a découvert l'Amérique en 1492 pour le compte de l'Espagne." },
+  { name: "Gutenberg",             country: "Allemagne",        fact: "Inventeur de l'imprimerie en Europe vers 1450, ce qui a révolutionné la diffusion des livres." },
+  { name: "Jules César",           country: "Italie",           fact: "Général et homme politique romain, a conquis la Gaule. Assassiné en 44 av. J.-C." },
+  { name: "Molière",               country: "France",           fact: "Auteur de comédies célèbres comme Le Malade imaginaire et L'Avare." },
+  { name: "Louis Pasteur",         country: "France",           fact: "Scientifique qui a inventé le vaccin contre la rage et la pasteurisation." },
+  { name: "Rembrandt",             country: "Pays-Bas",         fact: "Grand peintre du Siècle d'or néerlandais, célèbre pour La Ronde de nuit." },
+  { name: "Nicolas Copernic",      country: "Pologne",          fact: "Astronome qui a montré que la Terre tourne autour du Soleil." },
+  { name: "Vivaldi",              country: "Italie",           fact: "Compositeur baroque, célèbre pour Les Quatre Saisons." },
 ];
 
 
@@ -388,6 +404,14 @@ var MONUMENTS_EN = [
   { name: "Leaning Tower of Pisa",     country: "Italy",       city: "Pisa",        fact: "Bell tower leaning at 3.97 degrees, started in 1173." },
   { name: "Neuschwanstein Castle",     country: "Germany",     city: "Bavaria",     fact: "King Ludwig II's castle, inspiration for the Disney castle." },
   { name: "Kinderdijk Windmills",      country: "Netherlands", city: "Kinderdijk",  fact: "19 windmills from the 18th century, UNESCO heritage." },
+  { name: "Palace of Versailles",     country: "France",      city: "Versailles",  fact: "Palace of the Sun King Louis XIV, with the famous Hall of Mirrors." },
+  { name: "Mont-Saint-Michel",        country: "France",      city: "Normandy",    fact: "Abbey on a rocky island, surrounded by Europe's highest tides." },
+  { name: "Trevi Fountain",           country: "Italy",       city: "Rome",        fact: "Famous fountain where tourists throw a coin to make a wish." },
+  { name: "Venice Canals",            country: "Italy",       city: "Venice",      fact: "City built on water with gondolas instead of cars." },
+  { name: "Alhambra",                 country: "Spain",       city: "Granada",     fact: "Palace and fortress built by the Moors in the 13th century." },
+  { name: "Santa Claus Village",      country: "Finland",     city: "Rovaniemi",   fact: "Official Santa Claus village in Lapland, on the Arctic Circle." },
+  { name: "Berlin Wall (remains)",    country: "Germany",     city: "Berlin",      fact: "Wall that divided Berlin from 1961 to 1989, symbol of the Cold War." },
+  { name: "Arc de Triomphe",          country: "France",      city: "Paris",       fact: "Monument atop the Champs-Élysées, built by Napoleon in 1806." },
 ];
 
 var CUISINE_EN = [
@@ -446,6 +470,14 @@ var PEOPLE_EN = [
   { name: "The Brothers Grimm",        country: "Germany",            fact: "Authors of Cinderella, Snow White, Hansel and Gretel." },
   { name: "Frédéric Chopin",           country: "Poland",             fact: "Romantic composer and virtuoso pianist." },
   { name: "Aristotle",                 country: "Greece",             fact: "Ancient Greek philosopher, student of Plato." },
+  { name: "Christopher Columbus",     country: "Italy",              fact: "Italian navigator who discovered America in 1492 on behalf of Spain." },
+  { name: "Gutenberg",                country: "Germany",            fact: "Inventor of the printing press in Europe around 1450, revolutionising books." },
+  { name: "Julius Caesar",            country: "Italy",              fact: "Roman general and politician who conquered Gaul. Assassinated in 44 BC." },
+  { name: "Molière",                  country: "France",             fact: "Author of famous comedies like The Imaginary Invalid and The Miser." },
+  { name: "Louis Pasteur",            country: "France",             fact: "Scientist who invented the rabies vaccine and pasteurisation." },
+  { name: "Rembrandt",                country: "Netherlands",        fact: "Great painter of the Dutch Golden Age, famous for The Night Watch." },
+  { name: "Nicolaus Copernicus",      country: "Poland",             fact: "Astronomer who showed that the Earth revolves around the Sun." },
+  { name: "Vivaldi",                  country: "Italy",              fact: "Baroque composer, famous for The Four Seasons." },
 ];
 
 var EU_FACTS_EN = [
