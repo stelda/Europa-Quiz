@@ -8,7 +8,19 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
+<!-- ÉCRAN DE CONNEXION -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-emoji">🔒</div>
+    <h2 class="login-title">Quiz Europe</h2>
+    <p class="login-sub">Entre ton mot de passe pour accéder au quiz</p>
+    <input type="password" id="loginInput" class="login-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkLogin()">
+    <button class="login-btn" onclick="checkLogin()">Entrer</button>
+    <p class="login-error hidden" id="loginError">Mot de passe incorrect !</p>
+  </div>
+</div>
+
+<div class="app hidden" id="mainApp">
   <!-- LANGUE -->
   <div class="lang-toggle">
     <button class="lang-btn active" data-lang="fr" onclick="switchLang('fr')">🇫🇷 FR</button>
@@ -86,6 +98,25 @@
     </div>
   </div>
 </div>
+
+<!-- Login -->
+<script>
+var PASSWORD = "leo2026";
+function checkLogin() {
+  var input = document.getElementById('loginInput');
+  if (input.value === PASSWORD) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainApp').classList.remove('hidden');
+    input.value = '';
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
+    input.value = '';
+    input.focus();
+  }
+}
+// Focus auto sur le champ
+document.getElementById('loginInput').focus();
+</script>
 
 <!-- Scripts séparés : données d'abord, logique ensuite -->
 <script src="data.js"></script>
